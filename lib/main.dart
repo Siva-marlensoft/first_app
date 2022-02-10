@@ -1,55 +1,61 @@
-import 'package:first_app/question.dart';
+
+import 'package:first_app/widgets/user_Transaction.dart';
 import 'package:flutter/material.dart';
-import "package:first_app/answer.dart";
+import 'package:first_app/models/transaction.dart';
+
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
-}
-
-class _MyAppState extends State<MyApp> {
-  var _questionIndex = 0;
-
-  void _answerQuestion() {
-    setState(() {
-      _questionIndex = _questionIndex + 1;
-    });
-    print(_questionIndex);
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<Map<String, Object>> questions = [
-      {
-        'questionText': 'What\'s your favorite color?',
-        'answerText': ['Red', 'Blue', 'Green', 'Yellow']
-      },
-      {
-        'questionText': 'What\'s your favorite food?',
-        'answerText': ['Briyani', 'Dosa', 'Idly', 'Pizza']
-      },
-      {
-        'questionText': 'What\'s your favorite car?',
-        'answerText': ['Buggati', 'Ferrari', 'Audi', 'BMW']
-      },
-    ];
-
     return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text("My First Flutter App"),
-            ),
-            body: Column(
-              children: [
-                Question(questions[_questionIndex]['questionText']) ,
-                ...(questions[_questionIndex]['answerText'] as List<String>)
-                    .map((answer) {
-                  return Answer(_answerQuestion,answer);
-                }).toList()
-              ],
-            )));
+      title: 'Flutter App',
+      home: MyHomePage(),
+    );
   }
 }
+
+class MyHomePage extends StatelessWidget {
+  final List<Transaction> Transactions = [
+    Transaction(
+        id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
+    Transaction(
+        id: 't1', title: 'Men\s shirt', amount: 30, date: DateTime.now()),
+    Transaction(
+        id: 't1', title: 'Men\s watches', amount: 100, date: DateTime.now()),
+  ];
+  final TitleController = TextEditingController();
+  final AmountController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Flutter App'),
+        ),
+        body: SingleChildScrollView(
+          child: Column(children: [
+            // Card(
+            //   child: Container(
+            //     width:100,
+            //    child: Text("Chart!"),
+            //    ),
+            //   elevation: 5,
+        
+            //   ),
+            Container(
+              // width: double.infinity,
+              child: Card(
+                color: Colors.blue,
+                child: Text("Chart!"),
+                elevation: 5,
+              ),
+            ),
+            UserTranscation(),
+            
+          ]),
+        ));
+  }
+}
+
+class TextEditController {}
