@@ -1,55 +1,44 @@
-import 'package:first_app/question.dart';
 import 'package:flutter/material.dart';
-import "package:first_app/answer.dart";
+import 'package:provider/provider.dart';
+
+import './screens/cart_screen.dart';
+import './screens/products_overview_screen.dart';
+import './screens/product_detail_screen.dart';
+import './providers/products.dart';
+import './providers/cart.dart';
+import './providers/orders.dart';
+import './screens/orders_screen.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
-}
-
-class _MyAppState extends State<MyApp> {
-  var _questionIndex = 0;
-
-  void _answerQuestion() {
-    setState(() {
-      _questionIndex = _questionIndex + 1;
-    });
-    print(_questionIndex);
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<Map<String, Object>> questions = [
-      {
-        'questionText': 'What\'s your favorite color?',
-        'answerText': ['Red', 'Blue', 'Green', 'Yellow']
-      },
-      {
-        'questionText': 'What\'s your favorite food?',
-        'answerText': ['Briyani', 'Dosa', 'Idly', 'Pizza']
-      },
-      {
-        'questionText': 'What\'s your favorite car?',
-        'answerText': ['Buggati', 'Ferrari', 'Audi', 'BMW']
-      },
-    ];
-
-    return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text("My First Flutter App"),
-            ),
-            body: Column(
-              children: [
-                Question(questions[_questionIndex]['questionText']) ,
-                ...(questions[_questionIndex]['answerText'] as List<String>)
-                    .map((answer) {
-                  return Answer(_answerQuestion,answer);
-                }).toList()
-              ],
-            )));
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: Products(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Cart(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Orders(),
+        ),
+      ],
+      child: MaterialApp(
+          title: 'MyShop',
+          theme: ThemeData(
+            primarySwatch: Colors.purple,
+            accentColor: Colors.deepOrange,
+            fontFamily: 'Lato',
+          ),
+          home: ProductsOverviewScreen(),
+          routes: {
+            ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+            CartScreen.routeName: (ctx) => CartScreen(),
+            OrdersScreen.routeName: (ctx) => OrdersScreen(),
+          }),
+    );
   }
 }
