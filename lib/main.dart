@@ -1,3 +1,5 @@
+import 'package:first_app/widgets/edit_product_item.dart';
+import 'package:first_app/widgets/user_products_information.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,6 +40,8 @@ class MyApp extends StatelessWidget {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
             OrdersScreen.routeName: (ctx) => OrdersScreen(),
+            UserProductInformation.routeName: (ctx)=> UserProductInformation(),
+            EditProductItem.routeName : (ctx) => EditProductItem(),
           }),
     );
   }
